@@ -1,12 +1,8 @@
-import 'dart:developer';
-
-import 'package:avia_tickets/data/models/ticket_offer_list.dart';
 import 'package:avia_tickets/domain_models/offer.dart';
 import 'package:avia_tickets/domain_models/ticket.dart';
 import 'package:avia_tickets/domain_models/ticket_offer.dart';
 
 import 'mappers/remote_to_domain.dart';
-import 'models/offer_list.dart';
 import 'service/ticket_api_service_interface.dart';
 
 class AviaTicketRepository {

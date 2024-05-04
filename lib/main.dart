@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:avia_tickets/data/avia_ticket_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import 'app/style/app_colors_theme.dart';
+import 'app/style/app_dimensions_theme.dart';
+import 'app/style/app_texts_theme.dart';
+import 'data/avia_ticket_repository.dart';
 import 'data/service/ticket_api_service.dart';
-import 'domain_models/offer.dart';
 import 'domain_models/ticket_offer.dart';
 
 void main() {
@@ -43,9 +45,11 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: Theme.of(context).copyWith(extensions: [
+        AppDimensionsTheme.main(),
+        AppColorsTheme.dark(),
+        AppTextsTheme.main(),
+      ]),
       home: Scaffold(
         body: FutureBuilder<List<TicketOffer>>(
           future: offers,
