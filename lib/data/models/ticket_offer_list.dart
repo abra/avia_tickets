@@ -1,6 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'ticket_offer_rm.g.dart';
+part 'ticket_offer_list.g.dart';
+
+@JsonSerializable()
+class TicketOfferList {
+  final List<TicketOfferRM> ticketsOfferList;
+
+  TicketOfferList({
+    required this.ticketsOfferList,
+  });
+
+  factory TicketOfferList.fromJson(Map<String, dynamic> json) =>
+      _$TicketOfferListFromJson(json);
+}
 
 @JsonSerializable()
 class TicketOfferRM {

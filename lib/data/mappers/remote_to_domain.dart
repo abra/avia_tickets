@@ -2,9 +2,9 @@ import 'package:avia_tickets/domain_models/offer.dart';
 import 'package:avia_tickets/domain_models/ticket.dart';
 import 'package:avia_tickets/domain_models/ticket_offer.dart';
 
-import '../models/offer_rm.dart';
-import '../models/ticket_offer_rm.dart';
-import '../models/ticket_rm.dart';
+import '../models/offer_list.dart';
+import '../models/ticket_offer_list.dart';
+import '../models/ticket_list.dart';
 
 extension OfferRMtoDomain on OfferRM {
   Offer toDomain() {
@@ -36,16 +36,16 @@ extension TicketRMtoDomain on TicketRM {
       price: price.value,
       providerName: providerName,
       company: company,
-      departureTown: departure.town.toString(),
+      departureTown: departure.town,
       departureDate: departure.date,
-      departureAirport: departure.airport.name,
-      arrivalTown: arrival.town.toString(),
+      departureAirport: departure.airport,
+      arrivalTown: arrival.town,
       arrivalDate: arrival.date,
-      arrivalAirport: arrival.airport.name,
+      arrivalAirport: arrival.airport,
       hasTransfer: hasTransfer,
       hasVisaTransfer: hasVisaTransfer,
       hasLuggage: luggage.hasLuggage,
-      luggagePrice: luggage.price.value,
+      luggagePrice: luggage.price?.value,
       hasHandLuggage: handLuggage.hasHandLuggage,
       handLuggageSize: handLuggage.size,
       isReturnable: isReturnable,

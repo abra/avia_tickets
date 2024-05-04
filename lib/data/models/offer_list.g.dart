@@ -1,10 +1,20 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'offer_rm.dart';
+part of 'offer_list.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+OfferList _$OfferListFromJson(Map<String, dynamic> json) => OfferList(
+      offerList: (json['offerList'] as List<dynamic>)
+          .map((e) => OfferRM.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$OfferListToJson(OfferList instance) => <String, dynamic>{
+      'offerList': instance.offerList,
+    };
 
 OfferRM _$OfferRMFromJson(Map<String, dynamic> json) => OfferRM(
       id: (json['id'] as num).toInt(),

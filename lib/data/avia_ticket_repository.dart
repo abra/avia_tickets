@@ -13,17 +13,19 @@ class AviaTicketRepository {
   final TicketApiServiceInterface _ticketApiService;
 
   Future<List<Offer>> getOffers() async {
-    final offers = await _ticketApiService.getOffers();
-    return offers.map((offer) => offer.toDomain()).toList();
+    final data = await _ticketApiService.getOffers();
+    return data.offerList.map((offer) => offer.toDomain()).toList();
   }
 
   Future<List<TicketOffer>> getTicketOffers() async {
-    final ticketOffers = await _ticketApiService.getTicketOffers();
-    return ticketOffers.map((ticketOffer) => ticketOffer.toDomain()).toList();
+    final data = await _ticketApiService.getTicketOffers();
+    return data.ticketsOfferList
+        .map((ticketOffer) => ticketOffer.toDomain())
+        .toList();
   }
 
   Future<List<Ticket>> getTickets() async {
-    final tickets = await _ticketApiService.getTickets();
-    return tickets.map((ticket) => ticket.toDomain()).toList();
+    final data = await _ticketApiService.getTickets();
+    return data.ticketList.map((ticket) => ticket.toDomain()).toList();
   }
 }

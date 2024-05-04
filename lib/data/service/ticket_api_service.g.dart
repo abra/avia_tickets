@@ -21,13 +21,13 @@ class _TicketApiService implements TicketApiService {
   String? baseUrl;
 
   @override
-  Future<List<OfferRM>> getOffers() async {
+  Future<OfferList> getOffers() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<List<dynamic>>(_setStreamType<List<OfferRM>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<OfferList>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,20 +43,18 @@ class _TicketApiService implements TicketApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => OfferRM.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = OfferList.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<TicketOfferRM>> getTicketOffers() async {
+  Future<TicketOfferList> getTicketOffers() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<TicketOfferRM>>(Options(
+        .fetch<Map<String, dynamic>>(_setStreamType<TicketOfferList>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -72,20 +70,18 @@ class _TicketApiService implements TicketApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => TicketOfferRM.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = TicketOfferList.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<TicketRM>> getTickets() async {
+  Future<TicketList> getTickets() async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _result =
-        await _dio.fetch<List<dynamic>>(_setStreamType<List<TicketRM>>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<TicketList>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -101,9 +97,7 @@ class _TicketApiService implements TicketApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    var value = _result.data!
-        .map((dynamic i) => TicketRM.fromJson(i as Map<String, dynamic>))
-        .toList();
+    final value = TicketList.fromJson(_result.data!);
     return value;
   }
 

@@ -1,6 +1,6 @@
 class Ticket {
   final int id;
-  final String badge;
+  final String? badge;
   final int price;
   final String providerName;
   final String company;
@@ -13,9 +13,9 @@ class Ticket {
   final bool hasTransfer;
   final bool hasVisaTransfer;
   final bool hasLuggage;
-  final int luggagePrice;
+  final int? luggagePrice;
   final bool hasHandLuggage;
-  final String handLuggageSize;
+  final String? handLuggageSize;
   final bool isReturnable;
   final bool isExchangable;
 

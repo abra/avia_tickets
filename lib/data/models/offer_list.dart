@@ -1,6 +1,18 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'offer_rm.g.dart';
+part 'offer_list.g.dart';
+
+@JsonSerializable()
+class OfferList {
+  final List<OfferRM> offerList;
+
+  OfferList({
+    required this.offerList,
+  });
+
+  factory OfferList.fromJson(Map<String, dynamic> json) =>
+      _$OfferListFromJson(json);
+}
 
 @JsonSerializable()
 class OfferRM {

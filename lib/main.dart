@@ -1,11 +1,42 @@
+import 'dart:async';
+import 'dart:developer';
+
+import 'package:avia_tickets/data/avia_ticket_repository.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
+import 'data/service/ticket_api_service.dart';
+import 'domain_models/ticket.dart';
+
 void main() {
-  runApp(const MyApp());
+  final dio = Dio(BaseOptions(contentType: "application/json"));
+  runApp(
+    MyApp(
+      repo: AviaTicketRepository(ticketApiService: TicketApiService(dio)),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({
+    super.key,
+    required this.repo,
+  });
+
+  final AviaTicketRepository repo;
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late Future<List<Ticket>> tickets;
+
+  @override
+  void initState() {
+    super.initState();
+    tickets = widget.repo.getTickets();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +45,37 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Placeholder(),
+      home: Scaffold(
+        body: FutureBuilder<List<Ticket>>(
+          future: tickets,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done &&
+                snapshot.hasData) {
+              final tickets = snapshot.data!;
+              return ListView.builder(
+                itemCount: tickets.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    title: Text(
+                        '${tickets[index].arrivalTown} -> ${tickets[index].departureTown}'),
+                    subtitle: Text(
+                        'departure: ${tickets[index].departureAirport}, arrival: ${tickets[index].arrivalAirport}'),
+                    trailing: Text(tickets[index].price.toString()),
+                    onTap: () {},
+                  );
+                },
+              );
+            } else if (snapshot.hasError) {
+              log(snapshot.error.toString());
+              return Center(
+                child: Text('${snapshot.error}'),
+              );
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
+      ),
     );
   }
 }

@@ -1,9 +1,9 @@
-import '../models/offer_rm.dart';
-import '../models/ticket_offer_rm.dart';
-import '../models/ticket_rm.dart';
+import '../models/offer_list.dart';
+import '../models/ticket_offer_list.dart';
+import '../models/ticket_list.dart';
 
 abstract interface class TicketApiServiceInterface {
-  Future<List<OfferRM>> getOffers();
-  Future<List<TicketOfferRM>> getTicketOffers();
-  Future<List<TicketRM>> getTickets();
+  Future<OfferList> getOffers();
+  Future<TicketOfferList> getTicketOffers();
+  Future<TicketList> getTickets();
 }

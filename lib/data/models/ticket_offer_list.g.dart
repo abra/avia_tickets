@@ -1,10 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ticket_offer_rm.dart';
+part of 'ticket_offer_list.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+TicketOfferList _$TicketOfferListFromJson(Map<String, dynamic> json) =>
+    TicketOfferList(
+      ticketsOfferList: (json['ticketsOfferList'] as List<dynamic>)
+          .map((e) => TicketOfferRM.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$TicketOfferListToJson(TicketOfferList instance) =>
+    <String, dynamic>{
+      'ticketsOfferList': instance.ticketsOfferList,
+    };
 
 TicketOfferRM _$TicketOfferRMFromJson(Map<String, dynamic> json) =>
     TicketOfferRM(
