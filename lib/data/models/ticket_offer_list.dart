@@ -4,6 +4,7 @@ part 'ticket_offer_list.g.dart';
 
 @JsonSerializable()
 class TicketOfferList {
+  @JsonKey(name: 'tickets_offers')
   final List<TicketOfferRM> ticketsOfferList;
 
   TicketOfferList({
@@ -18,6 +19,7 @@ class TicketOfferList {
 class TicketOfferRM {
   final int id;
   final String title;
+  @JsonKey(name: 'time_range')
   final List<String> timeRange;
   final Price price;
 

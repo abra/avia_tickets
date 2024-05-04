@@ -6,7 +6,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import 'data/service/ticket_api_service.dart';
-import 'domain_models/ticket.dart';
+import 'domain_models/offer.dart';
+import 'domain_models/ticket_offer.dart';
 
 void main() {
   final dio = Dio(BaseOptions(contentType: "application/json"));
@@ -30,12 +31,12 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  late Future<List<Ticket>> tickets;
+  late Future<List<TicketOffer>> offers;
 
   @override
   void initState() {
     super.initState();
-    tickets = widget.repo.getTickets();
+    offers = widget.repo.getTicketOffers();
   }
 
   @override
@@ -46,21 +47,19 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.blue,
       ),
       home: Scaffold(
-        body: FutureBuilder<List<Ticket>>(
-          future: tickets,
+        body: FutureBuilder<List<TicketOffer>>(
+          future: offers,
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData) {
-              final tickets = snapshot.data!;
+              final offers = snapshot.data!;
               return ListView.builder(
-                itemCount: tickets.length,
+                itemCount: offers.length,
                 itemBuilder: (context, index) {
                   return ListTile(
-                    title: Text(
-                        '${tickets[index].arrivalTown} -> ${tickets[index].departureTown}'),
-                    subtitle: Text(
-                        'departure: ${tickets[index].departureAirport}, arrival: ${tickets[index].arrivalAirport}'),
-                    trailing: Text(tickets[index].price.toString()),
+                    title: Text('${offers[index].id}'),
+                    subtitle: Text(offers[index].title),
+                    trailing: Text(offers[index].price.toString()),
                     onTap: () {},
                   );
                 },

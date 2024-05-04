@@ -8,22 +8,23 @@ part of 'ticket_offer_list.dart';
 
 TicketOfferList _$TicketOfferListFromJson(Map<String, dynamic> json) =>
     TicketOfferList(
-      ticketsOfferList: (json['ticketsOfferList'] as List<dynamic>)
+      ticketsOfferList: (json['tickets_offers'] as List<dynamic>)
           .map((e) => TicketOfferRM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$TicketOfferListToJson(TicketOfferList instance) =>
     <String, dynamic>{
-      'ticketsOfferList': instance.ticketsOfferList,
+      'tickets_offers': instance.ticketsOfferList,
     };
 
 TicketOfferRM _$TicketOfferRMFromJson(Map<String, dynamic> json) =>
     TicketOfferRM(
       id: (json['id'] as num).toInt(),
       title: json['title'] as String,
-      timeRange:
-          (json['timeRange'] as List<dynamic>).map((e) => e as String).toList(),
+      timeRange: (json['time_range'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       price: Price.fromJson(json['price'] as Map<String, dynamic>),
     );
 
@@ -31,7 +32,7 @@ Map<String, dynamic> _$TicketOfferRMToJson(TicketOfferRM instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
-      'timeRange': instance.timeRange,
+      'time_range': instance.timeRange,
       'price': instance.price,
     };
 

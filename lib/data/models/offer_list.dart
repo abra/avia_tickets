@@ -4,6 +4,7 @@ part 'offer_list.g.dart';
 
 @JsonSerializable()
 class OfferList {
+  @JsonKey(name: 'offers')
   final List<OfferRM> offerList;
 
   OfferList({

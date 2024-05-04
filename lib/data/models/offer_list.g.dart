@@ -7,13 +7,13 @@ part of 'offer_list.dart';
 // **************************************************************************
 
 OfferList _$OfferListFromJson(Map<String, dynamic> json) => OfferList(
-      offerList: (json['offerList'] as List<dynamic>)
+      offerList: (json['offers'] as List<dynamic>)
           .map((e) => OfferRM.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$OfferListToJson(OfferList instance) => <String, dynamic>{
-      'offerList': instance.offerList,
+      'offers': instance.offerList,
     };
 
 OfferRM _$OfferRMFromJson(Map<String, dynamic> json) => OfferRM(
