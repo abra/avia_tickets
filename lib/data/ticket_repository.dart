@@ -5,8 +5,8 @@ import 'package:avia_tickets/domain_models/ticket_offer.dart';
 import 'mappers/remote_to_domain.dart';
 import 'service/ticket_api_service_interface.dart';
 
-class AviaTicketRepository {
-  const AviaTicketRepository({
+class TicketRepository {
+  const TicketRepository({
     required TicketApiServiceInterface ticketApiService,
   }) : _ticketApiService = ticketApiService;
 
