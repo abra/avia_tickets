@@ -15,7 +15,7 @@ class AppColorsTheme extends AppColorsThemeExt {
   static const _blue = Color(0xFF2261BC);
   static const _darkBlue = Color(0xFF00427D);
   static const _green = Color(0xFF3A633B);
-  static const _darkGreen = Color(0xFF015905);
+  static const _darkGreen = Color(0xFF1E341F);
   static const _red = Color(0xFFFF5E5E);
   static const _orange = Color(0xFFF36E36);
 
