@@ -45,11 +45,13 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: Theme.of(context).copyWith(extensions: [
-        AppDimensionsTheme.main(),
-        AppColorsTheme.dark(),
-        AppTextsTheme.main(),
-      ]),
+      theme: Theme.of(context).copyWith(
+        extensions: [
+          AppDimensionsTheme.main(),
+          AppColorsTheme.dark(),
+          AppTextsTheme.main(),
+        ],
+      ),
       home: Scaffold(
         body: FutureBuilder<List<TicketOffer>>(
           future: offers,

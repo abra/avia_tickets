@@ -87,9 +87,6 @@ flutter:
           weight: 400
         - asset: fonts/SF-Pro-Display-Semibold.otf
           weight: 600
-        - asset: fonts/SF-Pro-Display-Normal.otf
-          style: normal
-          weight: 400
         - asset: fonts/SF-Pro-Display-Medium.otf
           weight: 500
 
