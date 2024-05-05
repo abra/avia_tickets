@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'app/style/app_colors_theme.dart';
 import 'app/style/app_dimensions_theme.dart';
 import 'app/style/app_texts_theme.dart';
-import 'data/avia_ticket_repository.dart';
+import 'data/ticket_repository.dart';
 import 'data/service/ticket_api_service.dart';
 import 'domain_models/ticket_offer.dart';
 
@@ -15,7 +15,7 @@ void main() {
   final dio = Dio(BaseOptions(contentType: "application/json"));
   runApp(
     MyApp(
-      repo: AviaTicketRepository(ticketApiService: TicketApiService(dio)),
+      repo: TicketRepository(ticketApiService: TicketApiService(dio)),
     ),
   );
 }
@@ -26,7 +26,7 @@ class MyApp extends StatefulWidget {
     required this.repo,
   });
 
-  final AviaTicketRepository repo;
+  final TicketRepository repo;
 
   @override
   State<MyApp> createState() => _MyAppState();
