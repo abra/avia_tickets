@@ -18,21 +18,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final TicketRepository ticketRepo;
-  late final LocalStorageRepository localStorageRepo;
+  late final TicketRepository _ticketRepository;
+  late final LocalStorageRepository _localStorageRepository;
 
   @override
   void initState() {
     super.initState();
-    ticketRepo = widget.ticketRepository;
-    localStorageRepo = widget.localStorageRepository;
+    _ticketRepository = widget.ticketRepository;
+    _localStorageRepository = widget.localStorageRepository;
   }
 
   @override
   Widget build(BuildContext context) {
     return SizedBox.expand(
       child: ColoredBox(
-        color: context.appColors.blue,
+        color: context.appColors.black,
       ),
     );
   }

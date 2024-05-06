@@ -28,10 +28,10 @@ class _AppState extends State<App> {
       ticketRepository: widget.ticketRepository,
       localStorageRepository: widget.localStorageRepository,
     ),
-    const Text('Отели', style: TextStyle(color: Colors.white)),
-    const Text('Короче', style: TextStyle(color: Colors.white)),
-    const Text('Подписки', style: TextStyle(color: Colors.white)),
-    const Text('Профиль', style: TextStyle(color: Colors.white)),
+    const _PagePlaceholder(name: 'Отели'),
+    const _PagePlaceholder(name: 'Короче'),
+    const _PagePlaceholder(name: 'Подписки'),
+    const _PagePlaceholder(name: 'Профиль'),
   ];
 
   @override
@@ -135,6 +135,24 @@ class _AppState extends State<App> {
         ),
       ),
       label: label,
+    );
+  }
+}
+
+class _PagePlaceholder extends StatelessWidget {
+  const _PagePlaceholder({
+    required this.name,
+  });
+
+  final String name;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        name,
+        style: const TextStyle(color: Colors.white),
+      ),
     );
   }
 }
