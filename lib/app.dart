@@ -62,35 +62,35 @@ class _AppState extends State<App> {
             child: BottomNavigationBar(
               currentIndex: _index,
               items: [
-                getNavItem(
+                _getNavItem(
                   context: context,
                   itemIndex: 0,
                   currentIndex: _index,
                   svgAssetPath: 'assets/icons/svg/airplane.svg',
                   label: 'Авиабилеты',
                 ),
-                getNavItem(
+                _getNavItem(
                   context: context,
                   itemIndex: 1,
                   currentIndex: _index,
                   svgAssetPath: 'assets/icons/svg/hotels.svg',
                   label: 'Отели',
                 ),
-                getNavItem(
+                _getNavItem(
                   context: context,
                   itemIndex: 2,
                   currentIndex: _index,
                   svgAssetPath: 'assets/icons/svg/location.svg',
                   label: 'Короче',
                 ),
-                getNavItem(
+                _getNavItem(
                   context: context,
                   itemIndex: 3,
                   currentIndex: _index,
                   svgAssetPath: 'assets/icons/svg/ring.svg',
                   label: 'Подписки',
                 ),
-                getNavItem(
+                _getNavItem(
                   context: context,
                   itemIndex: 4,
                   currentIndex: _index,
@@ -110,7 +110,7 @@ class _AppState extends State<App> {
     );
   }
 
-  BottomNavigationBarItem getNavItem({
+  BottomNavigationBarItem _getNavItem({
     required BuildContext context,
     required int itemIndex,
     required int currentIndex,
@@ -125,11 +125,11 @@ class _AppState extends State<App> {
           semanticsLabel: '$label icon',
           colorFilter: itemIndex == currentIndex
               ? ColorFilter.mode(
-                  AppTheme.appColors.blue,
+                  AppTheme.appColors.darkBlue,
                   BlendMode.srcIn,
                 )
               : ColorFilter.mode(
-                  AppTheme.appColors.grey1,
+                  AppTheme.appColors.grey6,
                   BlendMode.srcIn,
                 ),
         ),
