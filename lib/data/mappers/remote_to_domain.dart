@@ -3,8 +3,8 @@ import 'package:avia_tickets/domain_models/ticket.dart';
 import 'package:avia_tickets/domain_models/ticket_offer.dart';
 
 import '../models/offer_list.dart';
-import '../models/ticket_offer_list.dart';
 import '../models/ticket_list.dart';
+import '../models/ticket_offer_list.dart';
 
 extension OfferRMtoDomain on OfferRM {
   Offer toDomain() {
