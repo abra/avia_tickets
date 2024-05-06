@@ -125,7 +125,7 @@ class _AppState extends State<App> {
           semanticsLabel: '$label icon',
           colorFilter: itemIndex == currentIndex
               ? ColorFilter.mode(
-                  AppTheme.appColors.darkBlue,
+                  AppTheme.appColors.blue,
                   BlendMode.srcIn,
                 )
               : ColorFilter.mode(
