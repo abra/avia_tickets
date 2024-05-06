@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors_ext.dart';
-import 'app_dimensions_ext.dart';
 import 'app_text_styles_ext.dart';
 
 extension AppThemeExtGetters on BuildContext {
@@ -10,6 +9,4 @@ extension AppThemeExtGetters on BuildContext {
   AppTextStylesExt get appTextStyles =>
       Theme.of(this).extension<AppTextStylesExt>()!;
 
-  AppDimensionsExt get appDimensions =>
-      Theme.of(this).extension<AppDimensionsExt>()!;
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'app_colors_ext.dart';
-import 'app_dimensions_ext.dart';
 import 'app_text_styles_ext.dart';
 
 class AppTheme {
@@ -87,19 +86,20 @@ class AppTheme {
     ),
   );
 
-  static const appDimensions = AppDimensionsExt(
-    verticalGap: 8,
-    horizontalGap: 8,
-    iconBorderRadius: 8,
-    buttonBorderRadius: 8,
-    inputBlockBorderRadius: 16,
-    inputBlockPadding: EdgeInsets.all(16),
-  );
-
-
   static final ThemeData dark = ThemeData.dark().copyWith(
     scaffoldBackgroundColor: appColors.black,
     splashColor: Colors.transparent,
+    inputDecorationTheme: InputDecorationTheme(
+      isDense: true,
+      hintStyle: appStyles.buttonText.copyWith(
+        color: appColors.grey6,
+        fontWeight: FontWeight.w600,
+      ),
+      border: InputBorder.none,
+      contentPadding: const EdgeInsets.symmetric(
+        vertical: 12,
+      ),
+    ),
     textTheme: TextTheme(
       displayLarge: appStyles.title1.copyWith(
         color: appColors.white,
@@ -110,7 +110,7 @@ class AppTheme {
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       type: BottomNavigationBarType.fixed,
-      elevation: 1,
+      elevation: 0,
       backgroundColor: appColors.black,
       selectedItemColor: appColors.blue,
       unselectedItemColor: appColors.grey6,
@@ -124,8 +124,6 @@ class AppTheme {
     extensions: [
       appColors,
       appStyles,
-      appDimensions,
     ],
   );
 }
-
