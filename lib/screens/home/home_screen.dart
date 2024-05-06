@@ -256,15 +256,16 @@ class _SearchTicketsBlock extends StatelessWidget {
           padding: const EdgeInsets.all(16),
           child: DecoratedBox(
             decoration: BoxDecoration(
-                color: context.appColors.grey4,
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 8,
-                    offset: Offset(0, 4),
-                  ),
-                ]),
+              color: context.appColors.grey4,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: context.appColors.black.withOpacity(0.25),
+                  blurRadius: 4,
+                  offset: const Offset(0, 4),
+                ),
+              ],
+            ),
             child: Row(
               children: [
                 const SizedBox(width: 16),
