@@ -1,13 +1,13 @@
 import 'local_storage/local_storage_interface.dart';
 
-class LocalStorageRepository {
-  LocalStorageRepository({
+class LocalStorage {
+  LocalStorage({
     required LocalStorageInterface storage,
   }) : _storage = storage;
 
   final LocalStorageInterface _storage;
 
-  Future<void> saveValue(String key, String value) {
+  Future<void> storeValue(String key, String value) {
     return _storage.saveValue(key, value);
   }
 
