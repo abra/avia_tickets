@@ -168,7 +168,7 @@ class _OffersHorizontalListView extends StatelessWidget {
           child: ValueListenableBuilder<HomeState>(
             valueListenable: _notifier,
             builder: (BuildContext context, HomeState state, _) {
-              if (state is HomeSuccessUpdate) {
+              if (state is HomeOffersSuccessUpdate) {
                 final offers = state.offers;
                 return ListView.separated(
                   shrinkWrap: true,
@@ -353,7 +353,7 @@ class _SearchTicketsBlockState extends State<_SearchTicketsBlock> {
                         child: ValueListenableBuilder<HomeState>(
                           valueListenable: _notifier,
                           builder: (BuildContext context, HomeState state, _) {
-                            if (state is HomeSearchInputUpdate) {
+                            if (state is HomeSearchInputSuccessUpdate) {
                               if (state.lastInput!.isNotEmpty) {
                                 _textController.text = state.lastInput!;
                               }

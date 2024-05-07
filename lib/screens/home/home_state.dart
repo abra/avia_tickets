@@ -9,8 +9,8 @@ class HomeLoading extends HomeState {
   List<Object?> get props => [];
 }
 
-class HomeSuccessUpdate extends HomeState {
-  const HomeSuccessUpdate({
+class HomeOffersSuccessUpdate extends HomeState {
+  const HomeOffersSuccessUpdate({
     required this.offers,
   });
 
@@ -22,8 +22,8 @@ class HomeSuccessUpdate extends HomeState {
       ];
 }
 
-class HomeSearchInputUpdate extends HomeState {
-  const HomeSearchInputUpdate({
+class HomeSearchInputSuccessUpdate extends HomeState {
+  const HomeSearchInputSuccessUpdate({
     required this.lastInput,
   });
 

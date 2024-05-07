@@ -30,12 +30,13 @@ class HomeNotifier extends ValueNotifier<HomeState> {
 
   Future<void> getOffers() async {
     final offers = await _ticketRepository.getOffers();
-    value = HomeSuccessUpdate(offers: offers);
+    value = HomeOffersSuccessUpdate(offers: offers);
   }
 
   Future<void> getLastEnteredValue() async {
     final lastValue = await _localStorage.getValue('from');
-    value = HomeSearchInputUpdate(lastInput: lastValue);
+    if (lastValue == null) return;
+    value = HomeSearchInputSuccessUpdate(lastInput: lastValue);
   }
 
   Future<void> storeLastEnteredValue(String value) async {
