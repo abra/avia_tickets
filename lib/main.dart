@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'app.dart';
 import 'data/local_storage/shared_prefs_storage.dart';
-import 'data/local_storage_repository.dart';
+import 'data/local_storage.dart';
 import 'data/service/ticket_api_service.dart';
 import 'data/ticket_repository.dart';
 
@@ -13,7 +13,7 @@ void main() {
   final ticketRepository = TicketRepository(
     ticketApiService: TicketApiService(dio),
   );
-  final localStorageRepository = LocalStorageRepository(
+  final localStorageRepository = LocalStorage(
     storage: SharedPrefsStorage(),
   );
   runApp(

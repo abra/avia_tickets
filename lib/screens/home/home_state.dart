@@ -4,18 +4,13 @@ sealed class HomeState extends Equatable {
   const HomeState();
 }
 
-class HomeInitial extends HomeState {
-  @override
-  List<Object?> get props => [];
-}
-
 class HomeLoading extends HomeState {
   @override
   List<Object?> get props => [];
 }
 
-class HomeSuccess extends HomeState {
-  const HomeSuccess({
+class HomeSuccessUpdate extends HomeState {
+  const HomeSuccessUpdate({
     required this.offers,
   });
 
@@ -23,45 +18,49 @@ class HomeSuccess extends HomeState {
 
   @override
   List<Object?> get props => [
-    offers,
-  ];
+        offers,
+      ];
 }
 
-// part of 'map_location_notifier.dart';
-//
-// sealed class MapLocationState extends Equatable {
-//   const MapLocationState();
-// }
-//
-// class MapInitialLocationUpdate extends MapLocationState {
-//   @override
-//   List<Object?> get props => [];
-// }
-//
-// class MapLocationUpdateSuccess extends MapLocationState {
-//   const MapLocationUpdateSuccess({
-//     required this.location,
-//   });
-//
-//   final Location location;
-//
-//   @override
-//   List<Object?> get props => [
-//     location,
-//   ];
-// }
-//
-// class MapLocationUpdateFailure extends MapLocationState {
-//   const MapLocationUpdateFailure({
-//     required this.error,
-//   }) : errorMessage = '$error';
-//
-//   final dynamic error;
-//   final String errorMessage;
-//
-//   @override
-//   List<Object?> get props => [
-//     error,
-//     errorMessage,
-//   ];
-// }
+class HomeSearchInputUpdate extends HomeState {
+  const HomeSearchInputUpdate({
+    required this.lastInput,
+  });
+
+  final String? lastInput;
+
+  @override
+  List<Object?> get props => [
+        lastInput,
+      ];
+}
+
+class HomeUpdateFailure extends HomeState {
+  const HomeUpdateFailure({
+    required this.error,
+  }) : errorMessage = '$error';
+
+  final dynamic error;
+  final String errorMessage;
+
+  @override
+  List<Object?> get props => [
+        error,
+        errorMessage,
+      ];
+}
+
+class HomeSearchInputUpdateFailure extends HomeState {
+  const HomeSearchInputUpdateFailure({
+    required this.error,
+  }) : errorMessage = '$error';
+
+  final dynamic error;
+  final String errorMessage;
+
+  @override
+  List<Object?> get props => [
+        error,
+        errorMessage,
+      ];
+}

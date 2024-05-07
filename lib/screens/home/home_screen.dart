@@ -1,8 +1,10 @@
 import 'package:avia_tickets/app/style/extensions.dart';
-import 'package:avia_tickets/data/local_storage_repository.dart';
+import 'package:avia_tickets/data/local_storage.dart';
 import 'package:avia_tickets/data/ticket_repository.dart';
+import 'package:avia_tickets/screens/home/home_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -12,7 +14,7 @@ class HomeScreen extends StatefulWidget {
   });
 
   final TicketRepository ticketRepository;
-  final LocalStorageRepository localStorageRepository;
+  final LocalStorage localStorageRepository;
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,7 +22,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late final TicketRepository _ticketRepository;
-  late final LocalStorageRepository _localStorageRepository;
+  late final LocalStorage _localStorageRepository;
+  late final HomeNotifier _notifier;
   static const _vGap32 = SizedBox(height: 32);
 
   @override
@@ -28,28 +31,33 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _ticketRepository = widget.ticketRepository;
     _localStorageRepository = widget.localStorageRepository;
+    _notifier = HomeNotifier(
+      ticketRepository: _ticketRepository,
+      localStorage: _localStorageRepository,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return const SafeArea(
+    return SafeArea(
       child: Scaffold(
         body: SizedBox(
           width: double.infinity,
           child: SingleChildScrollView(
             child: Padding(
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  _HeaderText(),
+                  const _HeaderText(),
                   _vGap32,
-                  _SearchTicketsBlock(),
+                  _SearchTicketsBlock(notifier: _notifier),
                   _vGap32,
-                  _OffersHorizontalListView(),
+                  _OffersHorizontalListView(notifier: _notifier),
                   _vGap32,
-                  _ShowAllOffersButton(),
+                  const _ShowAllOffersButton(),
                   _vGap32,
-                  _SuggestionsBlock(),
+                  const _SuggestionsBlock(),
                 ],
               ),
             ),
@@ -75,18 +83,35 @@ class _SuggestionsBlock extends StatelessWidget {
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 230,
+          height: 250,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemCount: 5,
+            itemCount: 3,
             itemBuilder: (context, index) {
-              return const SizedBox(
-                height: 230,
-                width: 132,
-                child: Placeholder(),
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 170,
+                    width: 170,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: Image.asset(
+                        'assets/other_images/img_${index + 1}.png',
+                        fit: BoxFit.fitHeight,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Место ${index + 1}',
+                    style: context.appTextStyles.text1,
+                  ),
+                  const Text('Lorem ipsum'),
+                ],
               );
             },
-            separatorBuilder: (context, index) => const SizedBox(width: 16),
+            separatorBuilder: (context, index) => const SizedBox(width: 20),
           ),
         ),
       ],
@@ -119,37 +144,52 @@ class _ShowAllOffersButton extends StatelessWidget {
 }
 
 class _OffersHorizontalListView extends StatelessWidget {
-  const _OffersHorizontalListView();
+  const _OffersHorizontalListView({
+    required HomeNotifier notifier,
+  }) : _notifier = notifier;
+
+  final HomeNotifier _notifier;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Музыкально отлететь',
-          textAlign: TextAlign.start,
-          style: context.appTextStyles.title1,
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Музыкально отлететь',
+            textAlign: TextAlign.start,
+            style: context.appTextStyles.title1,
+          ),
         ),
         const SizedBox(height: 12),
         SizedBox(
-          height: 230,
-          child: ListView.separated(
-            shrinkWrap: true,
-            scrollDirection: Axis.horizontal,
-            physics: const PageScrollPhysics(),
-            itemBuilder: (BuildContext context, int index) {
-              return const _OfferCard(
-                image: 'image',
-                town: 'town name',
-                title: 'title name',
-                price: 1000,
-              );
+          height: 270,
+          child: ValueListenableBuilder<HomeState>(
+            valueListenable: _notifier,
+            builder: (BuildContext context, HomeState state, _) {
+              if (state is HomeSuccessUpdate) {
+                final offers = state.offers;
+                return ListView.separated(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return _OfferCard(
+                      id: offers[index].id,
+                      town: offers[index].town,
+                      title: offers[index].title,
+                      price: offers[index].price.ruPriceFormat,
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(width: 20);
+                  },
+                  itemCount: offers.length,
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
             },
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(width: 20);
-            },
-            itemCount: 3,
           ),
         ),
       ],
@@ -159,21 +199,24 @@ class _OffersHorizontalListView extends StatelessWidget {
 
 class _OfferCard extends StatelessWidget {
   const _OfferCard({
-    required this.image,
-    required this.title,
-    required this.town,
-    required this.price,
-  });
+    required int id,
+    required String title,
+    required String town,
+    required String price,
+  })  : _id = id,
+        _title = title,
+        _town = town,
+        _price = price;
 
-  final String image;
-  final String title;
-  final String town;
-  final int price;
+  final int _id;
+  final String _title;
+  final String _town;
+  final String _price;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 132,
+      width: 170,
       child: DecoratedBox(
         decoration: BoxDecoration(
           color: context.appColors.black,
@@ -183,20 +226,26 @@ class _OfferCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
-              height: 132,
-              width: 132,
-              child: Placeholder(
-                child: Center(child: Text(image)),
+              height: 170,
+              width: 170,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(16),
+                ),
+                child: Image.asset(
+                  'assets/offer_images/id_$_id.png',
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
             const SizedBox(height: 8),
             Text(
-              title,
+              _title,
               style: context.appTextStyles.title3,
             ),
             const SizedBox(height: 8),
             Text(
-              town,
+              _town,
               style: context.appTextStyles.text2,
             ),
             const SizedBox(height: 8),
@@ -209,7 +258,7 @@ class _OfferCard extends StatelessWidget {
                   child: SvgPicture.asset('assets/icons/svg/airplane.svg'),
                 ),
                 Text(
-                  'от $price руб.',
+                  'от $_price',
                   style: context.appTextStyles.text2,
                 ),
               ],
@@ -240,8 +289,21 @@ class _HeaderText extends StatelessWidget {
   }
 }
 
-class _SearchTicketsBlock extends StatelessWidget {
-  const _SearchTicketsBlock();
+class _SearchTicketsBlock extends StatefulWidget {
+  const _SearchTicketsBlock({
+    required this.notifier,
+  });
+
+  final HomeNotifier notifier;
+
+  @override
+  State<_SearchTicketsBlock> createState() => _SearchTicketsBlockState();
+}
+
+class _SearchTicketsBlockState extends State<_SearchTicketsBlock> {
+  final TextEditingController _textController = TextEditingController();
+
+  HomeNotifier get _notifier => widget.notifier;
 
   @override
   Widget build(BuildContext context) {
@@ -288,14 +350,28 @@ class _SearchTicketsBlock extends StatelessWidget {
                   child: Column(
                     children: [
                       Expanded(
-                        child: TextField(
-                          decoration: const InputDecoration(
-                            hintText: 'Откуда - Москва',
-                          ),
-                          style: context.appTextStyles.buttonText.copyWith(
-                            color: context.appColors.white,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        child: ValueListenableBuilder<HomeState>(
+                          valueListenable: _notifier,
+                          builder: (BuildContext context, HomeState state, _) {
+                            if (state is HomeSearchInputUpdate) {
+                              if (state.lastInput!.isNotEmpty) {
+                                _textController.text = state.lastInput!;
+                              }
+                            }
+                            return TextField(
+                              onChanged: (text) {
+                                _notifier.storeLastEnteredValue(text);
+                              },
+                              controller: _textController,
+                              decoration: const InputDecoration(
+                                hintText: 'Откуда - Москва',
+                              ),
+                              style: context.appTextStyles.buttonText.copyWith(
+                                color: context.appColors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            );
+                          },
                         ),
                       ),
                       Divider(
@@ -325,4 +401,9 @@ class _SearchTicketsBlock extends StatelessWidget {
       ),
     );
   }
+}
+
+extension NumberFormatExt on int {
+  String get ruPriceFormat =>
+      '${NumberFormat('###,###', 'ru_RU').format(this)} ₽';
 }

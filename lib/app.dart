@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'app/style/app_theme.dart';
-import 'data/local_storage_repository.dart';
+import 'data/local_storage.dart';
 import 'data/ticket_repository.dart';
 import 'screens/home/home_screen.dart';
 
@@ -14,7 +14,7 @@ class App extends StatefulWidget {
   });
 
   final TicketRepository ticketRepository;
-  final LocalStorageRepository localStorageRepository;
+  final LocalStorage localStorageRepository;
 
   @override
   State<App> createState() => _AppState();
