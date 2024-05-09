@@ -4,14 +4,14 @@ import 'package:flutter_svg/svg.dart';
 
 class SearchModalBottomSheet extends StatefulWidget {
   const SearchModalBottomSheet({
+    super.key,
     required this.departureCity,
   });
 
   final String departureCity;
 
   @override
-  State<SearchModalBottomSheet> createState() =>
-      _SearchModalBottomSheetState();
+  State<SearchModalBottomSheet> createState() => _SearchModalBottomSheetState();
 }
 
 class _SearchModalBottomSheetState extends State<SearchModalBottomSheet> {
@@ -267,283 +267,432 @@ class _RouteSearchForm extends StatelessWidget {
   }
 }
 
-class _RouteTipsElementsRow extends StatelessWidget {
-  const _RouteTipsElementsRow({
-    required TextEditingController textController,
-  }) : _textController = textController;
+// class _RouteTipsElementsRow extends StatelessWidget {
+//   const _RouteTipsElementsRow({
+//     required TextEditingController textController,
+//   }) : _textController = textController;
+//
+//   final TextEditingController _textController;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceAround,
+//       children: [
+//         SizedBox(
+//           height: 90,
+//           width: 70,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               GestureDetector(
+//                 onTap: () {
+//                   Navigator.of(context).push(
+//                     MaterialPageRoute<Widget>(
+//                       builder: (context) => Scaffold(
+//                         appBar: AppBar(
+//                           title: Text(
+//                             'На главную',
+//                             style: context.appTextStyles.title1,
+//                           ),
+//                           leading: IconButton(
+//                             onPressed: () =>
+//                                 Navigator.of(context).popAndPushNamed('/'),
+//                             icon: SvgPicture.asset(
+//                               'assets/icons/svg/left-arrow.svg',
+//                             ),
+//                           ),
+//                         ),
+//                         body: Container(
+//                           color: context.appColors.darkGreen,
+//                           child: Center(
+//                             child: Text(
+//                               'Сложный маршрут',
+//                               textAlign: TextAlign.center,
+//                               style: context.appTextStyles.text2.copyWith(
+//                                 color: Colors.white,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//                 child: SizedBox(
+//                   width: 48,
+//                   height: 48,
+//                   child: DecoratedBox(
+//                     decoration: BoxDecoration(
+//                       color: context.appColors.green,
+//                       borderRadius: BorderRadius.circular(8),
+//                     ),
+//                     child: Center(
+//                       child: ConstrainedBox(
+//                         constraints: const BoxConstraints(
+//                           maxWidth: 48,
+//                           maxHeight: 48,
+//                         ),
+//                         child: SvgPicture.asset(
+//                           'assets/icons/svg/route.svg',
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(height: 8),
+//               Expanded(
+//                 child: Text(
+//                   'Сложный маршрут',
+//                   textAlign: TextAlign.center,
+//                   style: context.appTextStyles.title4,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(
+//           height: 90,
+//           width: 70,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               GestureDetector(
+//                 onTap: () {
+//                   _textController.text = 'Куда угодно';
+//                 },
+//                 child: SizedBox(
+//                   width: 48,
+//                   height: 48,
+//                   child: Center(
+//                     child: DecoratedBox(
+//                       decoration: BoxDecoration(
+//                         color: context.appColors.blue,
+//                         borderRadius: BorderRadius.circular(8),
+//                       ),
+//                       child: Center(
+//                         child: ConstrainedBox(
+//                           constraints: const BoxConstraints(
+//                             maxWidth: 24,
+//                             maxHeight: 24,
+//                           ),
+//                           child: SvgPicture.asset(
+//                             'assets/icons/svg/earth-icon.svg',
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(height: 8),
+//               Expanded(
+//                 child: Text(
+//                   'Куда угодно',
+//                   textAlign: TextAlign.center,
+//                   style: context.appTextStyles.title4,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(
+//           height: 90,
+//           width: 70,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               GestureDetector(
+//                 onTap: () {
+//                   Navigator.of(context).push(
+//                     MaterialPageRoute<Widget>(
+//                       builder: (context) => Scaffold(
+//                         appBar: AppBar(
+//                           title: Text(
+//                             'На главную',
+//                             style: context.appTextStyles.title1,
+//                           ),
+//                           leading: IconButton(
+//                             onPressed: () =>
+//                                 Navigator.of(context).popAndPushNamed('/'),
+//                             icon: SvgPicture.asset(
+//                               'assets/icons/svg/left-arrow.svg',
+//                             ),
+//                           ),
+//                         ),
+//                         body: Container(
+//                           color: context.appColors.darkBlue,
+//                           child: Center(
+//                             child: Text(
+//                               'Выходные',
+//                               textAlign: TextAlign.center,
+//                               style: context.appTextStyles.text2.copyWith(
+//                                 color: Colors.white,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//                 child: SizedBox(
+//                   width: 48,
+//                   height: 48,
+//                   child: DecoratedBox(
+//                     decoration: BoxDecoration(
+//                       color: context.appColors.darkBlue,
+//                       borderRadius: BorderRadius.circular(8),
+//                     ),
+//                     child: Center(
+//                       child: ConstrainedBox(
+//                         constraints: const BoxConstraints(
+//                           maxWidth: 48,
+//                           maxHeight: 48,
+//                         ),
+//                         child: SvgPicture.asset(
+//                           'assets/icons/svg/calendar-icon.svg',
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(height: 8),
+//               Expanded(
+//                 child: Text(
+//                   'Выходные',
+//                   textAlign: TextAlign.center,
+//                   style: context.appTextStyles.title4,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         SizedBox(
+//           height: 90,
+//           width: 70,
+//           child: Column(
+//             crossAxisAlignment: CrossAxisAlignment.center,
+//             children: [
+//               GestureDetector(
+//                 onTap: () {
+//                   Navigator.of(context).push(
+//                     MaterialPageRoute<Widget>(
+//                       builder: (context) => Scaffold(
+//                         appBar: AppBar(
+//                           title: Text(
+//                             'На главную',
+//                             style: context.appTextStyles.title1,
+//                           ),
+//                           leading: IconButton(
+//                             onPressed: () =>
+//                                 Navigator.of(context).popAndPushNamed('/'),
+//                             icon: SvgPicture.asset(
+//                               'assets/icons/svg/left-arrow.svg',
+//                             ),
+//                           ),
+//                         ),
+//                         body: Container(
+//                           color: context.appColors.red,
+//                           child: Center(
+//                             child: Text(
+//                               'Горящие билеты',
+//                               textAlign: TextAlign.center,
+//                               style: context.appTextStyles.text2.copyWith(
+//                                 color: Colors.white,
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   );
+//                 },
+//                 child: SizedBox(
+//                   width: 48,
+//                   height: 48,
+//                   child: DecoratedBox(
+//                     decoration: BoxDecoration(
+//                       color: context.appColors.red,
+//                       borderRadius: BorderRadius.circular(8),
+//                     ),
+//                     child: Center(
+//                       child: ConstrainedBox(
+//                         constraints: const BoxConstraints(
+//                           maxWidth: 48,
+//                           maxHeight: 48,
+//                         ),
+//                         child: SvgPicture.asset(
+//                           'assets/icons/svg/fire.svg',
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ),
+//               ),
+//               const SizedBox(height: 8),
+//               Expanded(
+//                 child: Text(
+//                   'Горящие билеты',
+//                   textAlign: TextAlign.center,
+//                   style: context.appTextStyles.title4,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//       ],
+//     );
+//   }
+// }
 
-  final TextEditingController _textController;
+// route_option.dart
+enum _RouteOption {
+  complex('Сложный маршрут', 'assets/icons/svg/route.svg'),
+  anywhere('Куда угодно', 'assets/icons/svg/earth-icon.svg'),
+  weekend('Выходные', 'assets/icons/svg/calendar-icon.svg'),
+  hotTickets('Горящие билеты', 'assets/icons/svg/fire.svg');
+
+  final String label;
+  final String iconPath;
+
+  const _RouteOption(this.label, this.iconPath);
+}
+
+// route_option_button.dart
+class _RouteOptionButton extends StatelessWidget {
+  final _RouteOption option;
+  final VoidCallback onTap;
+
+  const _RouteOptionButton({
+    required this.option,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        SizedBox(
-          height: 90,
-          width: 70,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<Widget>(
-                      builder: (context) => Scaffold(
-                        appBar: AppBar(
-                          title: Text(
-                            'На главную',
-                            style: context.appTextStyles.title1,
-                          ),
-                          leading: IconButton(
-                            onPressed: () =>
-                                Navigator.of(context).popAndPushNamed('/'),
-                            icon: SvgPicture.asset(
-                              'assets/icons/svg/left-arrow.svg',
-                            ),
-                          ),
-                        ),
-                        body: Container(
-                          color: context.appColors.darkGreen,
-                          child: Center(
-                            child: Text(
-                              'Сложный маршрут',
-                              textAlign: TextAlign.center,
-                              style: context.appTextStyles.text2.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: context.appColors.green,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 48,
-                          maxHeight: 48,
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/icons/svg/route.svg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+    return GestureDetector(
+      onTap: onTap,
+      child: SizedBox(
+        width: 48,
+        height: 48,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            color: _getColor(context, option),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(
+                maxWidth: 48,
+                maxHeight: 48,
               ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: Text(
-                  'Сложный маршрут',
-                  textAlign: TextAlign.center,
-                  style: context.appTextStyles.title4,
-                ),
-              ),
-            ],
+              child: SvgPicture.asset(option.iconPath),
+            ),
           ),
         ),
-        SizedBox(
-          height: 90,
-          width: 70,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  _textController.text = 'Куда угодно';
-                },
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: Center(
-                    child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: context.appColors.blue,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxWidth: 24,
-                            maxHeight: 24,
-                          ),
-                          child: SvgPicture.asset(
-                            'assets/icons/svg/earth-icon.svg',
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: Text(
-                  'Куда угодно',
-                  textAlign: TextAlign.center,
-                  style: context.appTextStyles.title4,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 90,
-          width: 70,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<Widget>(
-                      builder: (context) => Scaffold(
-                        appBar: AppBar(
-                          title: Text(
-                            'На главную',
-                            style: context.appTextStyles.title1,
-                          ),
-                          leading: IconButton(
-                            onPressed: () =>
-                                Navigator.of(context).popAndPushNamed('/'),
-                            icon: SvgPicture.asset(
-                              'assets/icons/svg/left-arrow.svg',
-                            ),
-                          ),
-                        ),
-                        body: Container(
-                          color: context.appColors.darkBlue,
-                          child: Center(
-                            child: Text(
-                              'Выходные',
-                              textAlign: TextAlign.center,
-                              style: context.appTextStyles.text2.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: context.appColors.darkBlue,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 48,
-                          maxHeight: 48,
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/icons/svg/calendar-icon.svg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: Text(
-                  'Выходные',
-                  textAlign: TextAlign.center,
-                  style: context.appTextStyles.title4,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 90,
-          width: 70,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              GestureDetector(
-                onTap: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute<Widget>(
-                      builder: (context) => Scaffold(
-                        appBar: AppBar(
-                          title: Text(
-                            'На главную',
-                            style: context.appTextStyles.title1,
-                          ),
-                          leading: IconButton(
-                            onPressed: () =>
-                                Navigator.of(context).popAndPushNamed('/'),
-                            icon: SvgPicture.asset(
-                              'assets/icons/svg/left-arrow.svg',
-                            ),
-                          ),
-                        ),
-                        body: Container(
-                          color: context.appColors.red,
-                          child: Center(
-                            child: Text(
-                              'Горящие билеты',
-                              textAlign: TextAlign.center,
-                              style: context.appTextStyles.text2.copyWith(
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  );
-                },
-                child: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      color: context.appColors.red,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    child: Center(
-                      child: ConstrainedBox(
-                        constraints: const BoxConstraints(
-                          maxWidth: 48,
-                          maxHeight: 48,
-                        ),
-                        child: SvgPicture.asset(
-                          'assets/icons/svg/fire.svg',
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 8),
-              Expanded(
-                child: Text(
-                  'Горящие билеты',
-                  textAlign: TextAlign.center,
-                  style: context.appTextStyles.title4,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ],
+      ),
     );
+  }
+
+  Color _getColor(BuildContext context, _RouteOption option) {
+    switch (option) {
+      case _RouteOption.complex:
+        return context.appColors.green;
+      case _RouteOption.anywhere:
+        return context.appColors.blue;
+      case _RouteOption.weekend:
+        return context.appColors.darkBlue;
+      case _RouteOption.hotTickets:
+        return context.appColors.red;
+    }
+  }
+}
+
+// route_tips_elements_row.dart
+class _RouteTipsElementsRow extends StatelessWidget {
+  const _RouteTipsElementsRow({
+    required this.textController,
+  });
+
+  final TextEditingController textController;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(
+      crossAxisCount: 4,
+      shrinkWrap: true,
+      children: _RouteOption.values.map((option) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _RouteOptionButton(
+              option: option,
+              onTap: () {
+                if (option == _RouteOption.anywhere) {
+                  textController.text = option.label;
+                } else {
+                  _navigateToOptionScreen(context, option);
+                }
+              },
+            ),
+            const SizedBox(height: 8),
+            Text(
+              option.label,
+              textAlign: TextAlign.center,
+              style: context.appTextStyles.title4,
+            ),
+          ],
+        );
+      }).toList(),
+    );
+  }
+
+  void _navigateToOptionScreen(BuildContext context, _RouteOption option) {
+    Navigator.of(context).push(
+      MaterialPageRoute<Widget>(
+        builder: (context) => Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'На главную',
+              style: context.appTextStyles.title1,
+            ),
+            leading: IconButton(
+              onPressed: () => Navigator.of(context).popAndPushNamed('/'),
+              icon: SvgPicture.asset(
+                'assets/icons/svg/left-arrow.svg',
+              ),
+            ),
+          ),
+          body: Container(
+            color: _getColor(context, option),
+            child: Center(
+              child: Text(
+                option.label,
+                textAlign: TextAlign.center,
+                style: context.appTextStyles.text2.copyWith(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color _getColor(BuildContext context, _RouteOption option) {
+    switch (option) {
+      case _RouteOption.complex:
+        return context.appColors.darkGreen;
+      case _RouteOption.anywhere:
+        return context.appColors.blue;
+      case _RouteOption.weekend:
+        return context.appColors.darkBlue;
+      case _RouteOption.hotTickets:
+        return context.appColors.red;
+    }
   }
 }
