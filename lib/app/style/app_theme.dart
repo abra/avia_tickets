@@ -96,9 +96,7 @@ class AppTheme {
         fontWeight: FontWeight.w600,
       ),
       border: InputBorder.none,
-      contentPadding: const EdgeInsets.symmetric(
-        vertical: 12,
-      ),
+      contentPadding: EdgeInsets.zero,
     ),
     textTheme: TextTheme(
       displayLarge: appStyles.title1.copyWith(
@@ -106,6 +104,16 @@ class AppTheme {
       ),
       displayMedium: appStyles.title2.copyWith(
         color: appColors.white,
+      ),
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      surfaceTintColor: Colors.transparent,
+      backgroundColor: appColors.grey2,
+      modalBackgroundColor: appColors.grey2,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(16),
+        ),
       ),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(

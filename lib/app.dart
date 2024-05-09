@@ -1,12 +1,12 @@
+import 'package:avia_tickets/screens/air_tickets/air_tickets_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'app/style/app_theme.dart';
 import 'data/local_storage.dart';
 import 'data/ticket_repository.dart';
-import 'screens/home/home_screen.dart';
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({
     super.key,
     required this.ticketRepository,
@@ -17,14 +17,38 @@ class App extends StatefulWidget {
   final LocalStorage localStorageRepository;
 
   @override
-  State<App> createState() => _AppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.dark,
+      home: HomeScreen(
+        ticketRepository: ticketRepository,
+        localStorageRepository: localStorageRepository,
+      ),
+    );
+  }
 }
 
-class _AppState extends State<App> {
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
+    super.key,
+    required this.ticketRepository,
+    required this.localStorageRepository,
+  });
+
+  final TicketRepository ticketRepository;
+  final LocalStorage localStorageRepository;
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
 
   late final _pages = <Widget>[
-    HomeScreen(
+    AirTicketsScreen(
       ticketRepository: widget.ticketRepository,
       localStorageRepository: widget.localStorageRepository,
     ),
@@ -36,11 +60,7 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      home: Scaffold(
+      return Scaffold(
         body: Center(
           child: IndexedStack(
             index: _index,
@@ -106,8 +126,7 @@ class _AppState extends State<App> {
             ),
           ),
         ),
-      ),
-    );
+      );
   }
 
   BottomNavigationBarItem _getNavItem({

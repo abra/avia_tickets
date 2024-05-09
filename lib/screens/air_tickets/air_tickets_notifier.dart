@@ -4,10 +4,10 @@ import 'package:avia_tickets/domain_models/offer.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
-part 'home_state.dart';
+part 'air_tickets_state.dart';
 
-class HomeNotifier extends ValueNotifier<HomeState> {
-  HomeNotifier({
+class AirTicketsNotifier extends ValueNotifier<HomeState> {
+  AirTicketsNotifier({
     required TicketRepository ticketRepository,
     required LocalStorage localStorage,
   })  : _ticketRepository = ticketRepository,

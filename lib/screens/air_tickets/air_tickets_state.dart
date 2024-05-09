@@ -1,4 +1,4 @@
-part of 'home_notifier.dart';
+part of 'air_tickets_notifier.dart';
 
 sealed class HomeState extends Equatable {
   const HomeState();
