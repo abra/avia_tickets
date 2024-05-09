@@ -50,7 +50,7 @@ class _AirTicketsScreenState extends State<AirTicketsScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const _HeaderText(),
+                  const _Header(),
                   _vGap32,
                   SearchTicketsBlock(notifier: _notifier),
                   _vGap32,
@@ -144,8 +144,8 @@ class _ShowAllOffersButton extends StatelessWidget {
   }
 }
 
-class _HeaderText extends StatelessWidget {
-  const _HeaderText();
+class _Header extends StatelessWidget {
+  const _Header();
 
   @override
   Widget build(BuildContext context) {
