@@ -106,6 +106,29 @@ class AppTheme {
         color: appColors.white,
       ),
     ),
+    switchTheme: SwitchThemeData(
+      thumbColor: MaterialStateProperty.all(
+        appColors.blue,
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      // remove border
+      style: ButtonStyle(
+        textStyle: MaterialStateProperty.all(appStyles.buttonText),
+        backgroundColor: MaterialStateProperty.all(appColors.blue),
+        foregroundColor: MaterialStateProperty.all(appColors.white),
+        side: MaterialStateProperty.all(
+          BorderSide.none,
+        ),
+        shape: MaterialStateProperty.all(
+          const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(4),
+            ),
+          ),
+        ),
+      ),
+    ),
     bottomSheetTheme: BottomSheetThemeData(
       surfaceTintColor: Colors.transparent,
       backgroundColor: appColors.grey2,

@@ -8,5 +8,4 @@ extension AppThemeExtGetters on BuildContext {
 
   AppTextStylesExt get appTextStyles =>
       Theme.of(this).extension<AppTextStylesExt>()!;
-
 }

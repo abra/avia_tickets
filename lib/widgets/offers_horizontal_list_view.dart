@@ -1,17 +1,14 @@
+import 'package:avia_tickets/app/state_manager/tickets_manager.dart';
 import 'package:avia_tickets/app/style/extensions.dart';
+import 'package:avia_tickets/app/state_manager/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 
-import 'air_tickets_notifier.dart';
-
 class OffersHorizontalListView extends StatelessWidget {
   const OffersHorizontalListView({
     super.key,
-    required AirTicketsNotifier notifier,
-  }) : _notifier = notifier;
-
-  final AirTicketsNotifier _notifier;
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,10 +25,10 @@ class OffersHorizontalListView extends StatelessWidget {
         const SizedBox(height: 12),
         SizedBox(
           height: 270,
-          child: ValueListenableBuilder<HomeState>(
-            valueListenable: _notifier,
-            builder: (BuildContext context, HomeState state, _) {
-              if (state is HomeOffersSuccessUpdate) {
+          child: ValueListenableBuilder<TicketState>(
+            valueListenable: context.getManager,
+            builder: (BuildContext context, TicketState state, _) {
+              if (state is OffersSuccessUpdate) {
                 final offers = state.offers;
                 return ListView.separated(
                   shrinkWrap: true,

@@ -1,14 +1,14 @@
+import 'package:avia_tickets/app/state_manager/tickets_manager.dart';
 import 'package:avia_tickets/app/style/extensions.dart';
 import 'package:avia_tickets/data/local_storage.dart';
 import 'package:avia_tickets/data/ticket_repository.dart';
+import 'package:avia_tickets/app/state_manager/tickets_manager_provider.dart';
+import 'package:avia_tickets/widgets/offers_horizontal_list_view.dart';
+import 'package:avia_tickets/widgets/search_tickets_block.dart';
 import 'package:flutter/material.dart';
 
-import 'air_tickets_notifier.dart';
-import 'offers_horizontal_list_view.dart';
-import 'search_tickets_block.dart';
-
-class AirTicketsScreen extends StatefulWidget {
-  const AirTicketsScreen({
+class TicketsScreen extends StatefulWidget {
+  const TicketsScreen({
     super.key,
     required this.ticketRepository,
     required this.localStorageRepository,
@@ -18,13 +18,13 @@ class AirTicketsScreen extends StatefulWidget {
   final LocalStorage localStorageRepository;
 
   @override
-  State<AirTicketsScreen> createState() => _AirTicketsScreenState();
+  State<TicketsScreen> createState() => _TicketsScreenState();
 }
 
-class _AirTicketsScreenState extends State<AirTicketsScreen> {
+class _TicketsScreenState extends State<TicketsScreen> {
   late final TicketRepository _ticketRepository;
   late final LocalStorage _localStorageRepository;
-  late final AirTicketsNotifier _notifier;
+  late final TicketsManager _manager;
   static const _vGap32 = SizedBox(height: 32);
 
   @override
@@ -32,7 +32,7 @@ class _AirTicketsScreenState extends State<AirTicketsScreen> {
     super.initState();
     _ticketRepository = widget.ticketRepository;
     _localStorageRepository = widget.localStorageRepository;
-    _notifier = AirTicketsNotifier(
+    _manager = TicketsManager(
       ticketRepository: _ticketRepository,
       localStorage: _localStorageRepository,
     );
@@ -40,26 +40,29 @@ class _AirTicketsScreenState extends State<AirTicketsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SizedBox(
-          width: double.infinity,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const _Header(),
-                  _vGap32,
-                  SearchTicketsBlock(notifier: _notifier),
-                  _vGap32,
-                  OffersHorizontalListView(notifier: _notifier),
-                  _vGap32,
-                  const _ShowAllOffersButton(),
-                  _vGap32,
-                  const _SuggestionsBlock(),
-                ],
+    return TicketsManagerProvider(
+      manager: _manager,
+      child: const SafeArea(
+        child: Scaffold(
+          body: SizedBox(
+            width: double.infinity,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _Header(),
+                    _vGap32,
+                    SearchTicketsBlock(),
+                    _vGap32,
+                    OffersHorizontalListView(),
+                    _vGap32,
+                    _ShowAllOffersButton(),
+                    _vGap32,
+                    _SuggestionsBlock(),
+                  ],
+                ),
               ),
             ),
           ),

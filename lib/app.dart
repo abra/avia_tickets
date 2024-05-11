@@ -1,7 +1,9 @@
-import 'package:avia_tickets/screens/air_tickets/air_tickets_screen.dart';
+import 'package:avia_tickets/app/state_manager/tickets_manager_provider.dart';
+import 'package:avia_tickets/screens/tickets_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'app/state_manager/tickets_manager.dart';
 import 'app/style/app_theme.dart';
 import 'data/local_storage.dart';
 import 'data/ticket_repository.dart';
@@ -18,17 +20,23 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      home: HomeScreen(
+    return TicketsManagerProvider(
+      manager: TicketsManager(
         ticketRepository: ticketRepository,
-        localStorageRepository: localStorageRepository,
+        localStorage: localStorageRepository,
+      ),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.dark,
+        home: HomeScreen(
+          ticketRepository: ticketRepository,
+          localStorageRepository: localStorageRepository,
+        ),
       ),
     );
   }
 }
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -48,7 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
   int _index = 0;
 
   late final _pages = <Widget>[
-    AirTicketsScreen(
+    TicketsScreen(
       ticketRepository: widget.ticketRepository,
       localStorageRepository: widget.localStorageRepository,
     ),
@@ -60,73 +68,73 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        body: Center(
-          child: IndexedStack(
-            index: _index,
-            children: _pages,
-          ),
+    return Scaffold(
+      body: Center(
+        child: IndexedStack(
+          index: _index,
+          children: _pages,
         ),
-        bottomNavigationBar: DecoratedBox(
-          decoration: BoxDecoration(
-            boxShadow: <BoxShadow>[
-              BoxShadow(
-                color: AppTheme.appColors.grey1,
-                blurRadius: 1,
+      ),
+      bottomNavigationBar: DecoratedBox(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: AppTheme.appColors.grey1,
+              blurRadius: 1,
+            ),
+          ],
+        ),
+        child: SizedBox(
+          height: 100,
+          width: double.infinity,
+          child: BottomNavigationBar(
+            currentIndex: _index,
+            items: [
+              _getNavItem(
+                context: context,
+                itemIndex: 0,
+                currentIndex: _index,
+                svgAssetPath: 'assets/icons/svg/airplane.svg',
+                label: 'Авиабилеты',
+              ),
+              _getNavItem(
+                context: context,
+                itemIndex: 1,
+                currentIndex: _index,
+                svgAssetPath: 'assets/icons/svg/hotels.svg',
+                label: 'Отели',
+              ),
+              _getNavItem(
+                context: context,
+                itemIndex: 2,
+                currentIndex: _index,
+                svgAssetPath: 'assets/icons/svg/location.svg',
+                label: 'Короче',
+              ),
+              _getNavItem(
+                context: context,
+                itemIndex: 3,
+                currentIndex: _index,
+                svgAssetPath: 'assets/icons/svg/ring.svg',
+                label: 'Подписки',
+              ),
+              _getNavItem(
+                context: context,
+                itemIndex: 4,
+                currentIndex: _index,
+                svgAssetPath: 'assets/icons/svg/profile.svg',
+                label: 'Профиль',
               ),
             ],
-          ),
-          child: SizedBox(
-            height: 100,
-            width: double.infinity,
-            child: BottomNavigationBar(
-              currentIndex: _index,
-              items: [
-                _getNavItem(
-                  context: context,
-                  itemIndex: 0,
-                  currentIndex: _index,
-                  svgAssetPath: 'assets/icons/svg/airplane.svg',
-                  label: 'Авиабилеты',
-                ),
-                _getNavItem(
-                  context: context,
-                  itemIndex: 1,
-                  currentIndex: _index,
-                  svgAssetPath: 'assets/icons/svg/hotels.svg',
-                  label: 'Отели',
-                ),
-                _getNavItem(
-                  context: context,
-                  itemIndex: 2,
-                  currentIndex: _index,
-                  svgAssetPath: 'assets/icons/svg/location.svg',
-                  label: 'Короче',
-                ),
-                _getNavItem(
-                  context: context,
-                  itemIndex: 3,
-                  currentIndex: _index,
-                  svgAssetPath: 'assets/icons/svg/ring.svg',
-                  label: 'Подписки',
-                ),
-                _getNavItem(
-                  context: context,
-                  itemIndex: 4,
-                  currentIndex: _index,
-                  svgAssetPath: 'assets/icons/svg/profile.svg',
-                  label: 'Профиль',
-                ),
-              ],
-              onTap: (index) {
-                setState(() {
-                  _index = index;
-                });
-              },
-            ),
+            onTap: (index) {
+              setState(() {
+                _index = index;
+              });
+            },
           ),
         ),
-      );
+      ),
+    );
   }
 
   BottomNavigationBarItem _getNavItem({

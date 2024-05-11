@@ -1,4 +1,5 @@
 import 'package:avia_tickets/app/style/extensions.dart';
+import 'package:avia_tickets/screens/country_selected_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -15,7 +16,7 @@ class SearchModalBottomSheet extends StatefulWidget {
 }
 
 class _SearchModalBottomSheetState extends State<SearchModalBottomSheet> {
-  final _textController = TextEditingController();
+  final _arrivalCityTextController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +40,16 @@ class _SearchModalBottomSheetState extends State<SearchModalBottomSheet> {
               ),
             ),
             const SizedBox(height: 24),
-            _RouteSearchForm(widget: widget, textController: _textController),
+            _RouteSearchForm(
+              widget: widget,
+              textController: _arrivalCityTextController,
+            ),
             const SizedBox(height: 24),
             Padding(
               padding: const EdgeInsets.only(left: 16, right: 16),
-              child: _RouteTipsElementsRow(textController: _textController),
+              child: _RouteTipOptionsRow(
+                textController: _arrivalCityTextController,
+              ),
             ),
             const SizedBox(height: 24),
             Padding(
@@ -57,116 +63,108 @@ class _SearchModalBottomSheetState extends State<SearchModalBottomSheet> {
                   width: double.infinity,
                   child: Padding(
                     padding: const EdgeInsets.all(16),
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 48,
-                              height: 48,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  'assets/city_images/istanbul.png',
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Стамбул',
-                                    style: context.appTextStyles.title3,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Популярное направление',
-                                    style: context.appTextStyles.text2.copyWith(
-                                      color: context.appColors.grey5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(color: context.appColors.grey4),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 48,
-                              height: 48,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  'assets/city_images/sochi.png',
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Сочи',
-                                    style: context.appTextStyles.title3,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Популярное направление',
-                                    style: context.appTextStyles.text2.copyWith(
-                                      color: context.appColors.grey5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                        Divider(color: context.appColors.grey4),
-                        Row(
-                          children: [
-                            SizedBox(
-                              width: 48,
-                              height: 48,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
-                                child: Image.asset(
-                                  'assets/city_images/phuket.png',
-                                  fit: BoxFit.fitHeight,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 8),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Пхукет',
-                                    style: context.appTextStyles.title3,
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text(
-                                    'Популярное направление',
-                                    style: context.appTextStyles.text2.copyWith(
-                                      color: context.appColors.grey5,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                    child: IntrinsicWidth(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          _ArrivalOptionBlock(
+                            town: 'Стамбул',
+                            onTap: () {},
+                            image: 'assets/city_images/istanbul.png',
+                          ),
+                          Divider(color: context.appColors.grey4),
+                          _ArrivalOptionBlock(
+                            town: 'Сочи',
+                            onTap: () {
+                              _arrivalCityTextController.text = 'Сочи';
+                              if (mounted) {
+                                Future.delayed(
+                                  const Duration(milliseconds: 200),
+                                      () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute<String>(
+                                        builder: (context) => CountrySelectedScreen(
+                                          departureCity: widget.departureCity,
+                                          arrivalCity: 'Сочи',
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            image: 'assets/city_images/sochi.png',
+                          ),
+                          Divider(color: context.appColors.grey4),
+                          _ArrivalOptionBlock(
+                            town: 'Пхукет',
+                            onTap: () {},
+                            image: 'assets/city_images/phuket.png',
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ArrivalOptionBlock extends StatelessWidget {
+  const _ArrivalOptionBlock({
+    required this.town,
+    required this.onTap,
+    required this.image,
+  });
+
+  final String town;
+  final VoidCallback onTap;
+  final String image;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 48,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onTap,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Image.asset(
+                  image,
+                  fit: BoxFit.fitHeight,
+                  semanticLabel: '$town image',
+                ),
+              ),
+            ),
+            const SizedBox(width: 8),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    town,
+                    style: context.appTextStyles.title3,
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Популярное направление',
+                    style: context.appTextStyles.text2.copyWith(
+                      color: context.appColors.grey5,
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -328,8 +326,8 @@ class _RouteOptionButton extends StatelessWidget {
   }
 }
 
-class _RouteTipsElementsRow extends StatelessWidget {
-  const _RouteTipsElementsRow({
+class _RouteTipOptionsRow extends StatelessWidget {
+  const _RouteTipOptionsRow({
     required this.textController,
   });
 
@@ -337,9 +335,8 @@ class _RouteTipsElementsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 4,
-      shrinkWrap: true,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: _RouteOption.values.map((option) {
         return Column(
           mainAxisSize: MainAxisSize.min,
@@ -355,10 +352,14 @@ class _RouteTipsElementsRow extends StatelessWidget {
               },
             ),
             const SizedBox(height: 8),
-            Text(
-              option.label,
-              textAlign: TextAlign.center,
-              style: context.appTextStyles.title4,
+            SizedBox(
+              height: 48,
+              width: 70,
+              child: Text(
+                option.label,
+                textAlign: TextAlign.center,
+                style: context.appTextStyles.title4,
+              ),
             ),
           ],
         );

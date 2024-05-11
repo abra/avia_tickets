@@ -40,4 +40,25 @@ class Ticket {
     required this.isReturnable,
     required this.isExchangable,
   });
+
+  String get departureTimeStr {
+    final hh = departureDate.hour.toString().padLeft(2, '0');
+    final mm = departureDate.minute.toString().padLeft(2, '0');
+    return '$hh:$mm';
+  }
+
+  String get arrivalTimeStr {
+    final hh = arrivalDate.hour.toString().padLeft(2, '0');
+    final mm = arrivalDate.minute.toString().padLeft(2, '0');
+    return '$hh:$mm';
+  }
+
+  String get travelTimeStr {
+    final hh = arrivalDate.difference(departureDate).inHours;
+    final mm = arrivalDate.difference(departureDate).inMinutes.remainder(60);
+    final travelTime = (hh + mm / 60);
+    return travelTime.toStringAsFixed(1);
+  }
+
+  String get transferStr => hasTransfer ? 'С пересадкой' : 'Без пересадок';
 }

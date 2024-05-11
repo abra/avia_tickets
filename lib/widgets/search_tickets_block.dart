@@ -1,17 +1,15 @@
+import 'package:avia_tickets/app/state_manager/tickets_manager.dart';
 import 'package:avia_tickets/app/style/extensions.dart';
+import 'package:avia_tickets/app/state_manager/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-import 'air_tickets_notifier.dart';
 import 'search_modal_bottom_sheet.dart';
 
 class SearchTicketsBlock extends StatefulWidget {
   const SearchTicketsBlock({
     super.key,
-    required this.notifier,
   });
-
-  final AirTicketsNotifier notifier;
 
   @override
   State<SearchTicketsBlock> createState() => _SearchTicketsBlockState();
@@ -22,7 +20,7 @@ class _SearchTicketsBlockState extends State<SearchTicketsBlock> {
   final _arrivalTextController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
-  AirTicketsNotifier get _notifier => widget.notifier;
+  TicketsManager get _manager => context.getManager;
 
   @override
   void initState() {
@@ -99,10 +97,10 @@ class _SearchTicketsBlockState extends State<SearchTicketsBlock> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Expanded(
-                        child: ValueListenableBuilder<HomeState>(
-                          valueListenable: _notifier,
-                          builder: (BuildContext context, HomeState state, _) {
-                            if (state is HomeSearchInputSuccessUpdate) {
+                        child: ValueListenableBuilder<TicketState>(
+                          valueListenable: _manager,
+                          builder: (BuildContext context, TicketState state, _) {
+                            if (state is SearchInputSuccessUpdate) {
                               if (state.lastInput!.isNotEmpty) {
                                 _departureTextController.text =
                                     state.lastInput!;
@@ -111,7 +109,7 @@ class _SearchTicketsBlockState extends State<SearchTicketsBlock> {
                             return Center(
                               child: TextField(
                                 onChanged: (text) {
-                                  _notifier.storeLastEnteredValue(text);
+                                  _manager.storeLastEnteredValue(text);
                                 },
                                 controller: _departureTextController,
                                 decoration: const InputDecoration(
